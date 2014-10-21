@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'bootstrap3',
     'sistema.apps.principal',
     'sistema.apps.usuario',
+    'captcha',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -97,3 +98,7 @@ STATIC_URL = '/static/'
 TEMPLATE_DIRS=(os.path.join(BASE_DIR,"sistema/templates"),)
 STATICFILES_DIRS=(os.path.join(BASE_DIR,"sistema/static"),)
 MEDIA_ROOT=os.path.join(BASE_DIR,'sistema/media')
+
+#Capcha
+RECAPTCHA_PUBLIC_KEY = '6LcOTvwSAAAAAMQYA4DpRIL-0z7v4cQXZghF7yp4'
+RECAPTCHA_PRIVATE_KEY = '6LcOTvwSAAAAAEu9W75F_mKDpQUwS8dYcuZNXkgs'

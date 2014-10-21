@@ -27,6 +27,13 @@ def registro_view(request):
 def login_view(request):
 	if request.method=="POST":
 		formulario=AuthenticationForm(request.POST)
+		if request.session['cont']>3:
+			formulario2=fcapcha(request.POST)
+			if formulario2.is_valid():
+				pass
+			else:
+				datos={'formulario':formulario,'formulario2':formulario2}
+				return render_to_response("usuario/login.html",datos,context_instance=RequestContext(request))		
 		if formulario.is_valid:
 			usuario=request.POST['username']
 			contrasena=request.POST['password']
@@ -42,11 +49,13 @@ def login_view(request):
 			else:
 				request.session['cont']=request.session['cont']+1
 				aux=request.session['cont']
-				if aux>3:
-					return HttpResponse("Muchos intentos usted esta bloqueado")
 				estado=True
 				mensaje="Error en los datos "+str(aux)
-				datos={'formulario':formulario,'estado':estado,'mensaje':mensaje}
+				if aux>3:
+					formulario2=fcapcha()
+					datos={'formulario':formulario,'formulario2':formulario2,'estado':estado,'mensaje':mensaje}
+				else:
+					datos={'formulario':formulario,'estado':estado,'mensaje':mensaje}
 				return render_to_response("usuario/login.html",datos,context_instance=RequestContext(request))		
 	else:
 		request.session['cont']=0
